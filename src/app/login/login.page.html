@@ -1,0 +1,28 @@
+
+
+<ion-content class="ion-padding login-content">
+  <div class="logo-container">
+    <img src="assets/loginn.jpg" alt="Cabinet Médical">
+  </div>
+
+  <h2>Bienvenue</h2>
+  <p>Connectez-vous pour accéder à votre espace.</p>
+
+  <form class="form-container" (ngSubmit)="onLogin()">
+    
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Mot de passe</ion-label>
+      <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+    </ion-item>
+
+    <p class="forgot-password" routerLink="/forgot-password">Mot de passe oublié ?</p>
+
+    <ion-button expand="full" color="primary" type="submit">Se connecter</ion-button>
+    <ion-button expand="full" fill="outline" color="secondary" routerLink="/inscription">S'inscrire</ion-button>
+  </form>
+</ion-content>

@@ -1,0 +1,53 @@
+.login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centre les éléments verticalement */
+    align-items: center; /* Centre les éléments horizontalement */
+    height: 100vh; /* Pleine hauteur de l'écran */
+    text-align: center; /* Aligne le texte au centre */
+    padding: 20px; /* Ajouter du padding pour que le contenu ne touche pas les bords */
+}
+
+.logo-container img {
+    width: 150px; /* Ajuste la taille du logo */
+    margin-bottom: 20px; /* Espacement en dessous du logo */
+}
+
+.form-container {
+    width: 100%;
+    max-width: 350px; /* Largeur maximale du formulaire */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Aligner les champs du formulaire au centre */
+}
+
+ion-item {
+    width: 100%; /* Assurer que les champs occupent toute la largeur */
+}
+
+.forgot-password {
+    color: #007bff;
+    font-size: 14px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+ion-button {
+    width: 80%;/* Ajuster la largeur des boutons */
+    margin-top: 10px;
+}
+/* Style pour la barre d'onglets fixe */
+ion-tab-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: var(--tab-bar-height);
+    z-index: 1000; /* Assure que la barre est au-dessus du contenu */
+  }
+  
+  /* Ajouter une marge en bas du contenu pour éviter le chevauchement */
+  ion-content {
+    --overflow: auto;
+    margin-bottom: var(--tab-bar-height); /* Évite le chevauchement avec la barre d'onglets */
+  }
+  

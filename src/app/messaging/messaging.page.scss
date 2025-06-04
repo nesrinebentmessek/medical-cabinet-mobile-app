@@ -1,0 +1,42 @@
+.doctor-card {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .doctor-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  ion-card-header {
+    padding: 10px;
+  }
+
+  ion-card-title {
+    font-size: 1.2rem;
+    color: #333;
+    cursor: pointer;
+  }
+
+  ion-card-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+  }
+}
+
+ion-grid {
+  padding: 10px;
+}
+
+h3 {
+  padding: 10px;
+  font-size: 1.3rem;
+  color: #333;
+}

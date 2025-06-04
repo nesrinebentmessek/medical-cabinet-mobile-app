@@ -1,0 +1,72 @@
+/* Styles généraux pour le contenu */
+.login-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrer verticalement */
+  align-items: center; /* Centrer horizontalement */
+  height: 100vh; /* Pleine hauteur de l'écran */
+  text-align: center; /* Aligner le texte au centre */
+  padding: 20px; /* Espacement autour du contenu */
+}
+
+.logo-container img {
+    width: 150px; /* Ajuste la taille du logo */
+    margin-bottom: 20px; /* Espacement en dessous du logo */
+}
+
+
+/* Titre de la page */
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Description sous le titre */
+p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Formulaire */
+ion-item {
+  width: 100%; /* S'assurer que chaque champ occupe toute la largeur du conteneur */
+  margin-bottom: 15px; /* Ajouter un espacement entre les champs du formulaire */
+}
+
+/* Lien de connexion */
+.login-link {
+  font-size: 14px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Bouton d'inscription */
+ion-button {
+  width: 100%; /* Le bouton occupe toute la largeur de l'écran */
+  margin-top: 20px; /* Espacement au-dessus du bouton */
+}
+/* Style pour la barre d'onglets fixe */
+ion-tab-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: var(--tab-bar-height);
+  z-index: 1000; /* Assure que la barre est au-dessus du contenu */
+}
+
+/* Ajouter une marge en bas du contenu pour éviter le chevauchement */
+ion-content {
+  --overflow: auto;
+  margin-bottom: var(--tab-bar-height); /* Évite le chevauchement avec la barre d'onglets */
+}

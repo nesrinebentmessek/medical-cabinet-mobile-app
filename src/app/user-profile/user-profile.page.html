@@ -1,0 +1,170 @@
+
+<ion-content *ngIf="user" class="profile-content">
+  <!-- Section Profil -->
+  <div class="profile-section">
+    <div class="profile-header">
+      <ion-avatar class="profile-avatar">
+        <img [src]=" 'assets/ghaida.jpeg'" alt="Profile Picture" />
+      </ion-avatar>
+      <div class="profile-info">
+        <h1 class="user-name">{{ user.name }}</h1>
+        <ion-chip color="secondary" class="role-chip">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <ion-label>{{ user.role | titlecase }}</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions principales -->
+  <div class="action-grid">
+    <ng-container *ngIf="user?.role === 'patient'">
+      <ion-button expand="block" color="light" class="action-button" (click)="goToDocuments()">
+        <div class="button-content">
+          <ion-icon name="document-outline" class="button-icon"></ion-icon>
+          <span>Documents</span>
+        </div>
+      </ion-button>
+      <ion-button expand="block" color="light" class="action-button" (click)="goToHistorique()">
+        <div class="button-content">
+          <ion-icon name="document-outline" class="button-icon"></ion-icon>
+          <span>Mes rendez-vouz</span>
+        </div>
+      </ion-button>
+      
+      <ion-button expand="block" color="light" class="action-button" (click)="goToNotifications()">
+        <div class="button-content">
+          <ion-icon name="notifications-outline" class="button-icon"></ion-icon>
+          <span>Notifications</span>
+        </div>
+      </ion-button>
+    </ng-container>
+
+    <ng-container *ngIf="user?.role === 'medecin'">
+      <ion-button expand="block" color="light" class="action-button" (click)="goToDisponibilites()">
+        <div class="button-content">
+          <ion-icon name="calendar-outline" class="button-icon"></ion-icon>
+          <span>Disponibilités</span>
+        </div>
+      </ion-button>
+      
+      <ion-button expand="block" color="light" class="action-button" (click)="goToConsultations()">
+        <div class="button-content">
+          <ion-icon name="medkit-outline" class="button-icon"></ion-icon>
+          <span>Consultations</span>
+        </div>
+      </ion-button>
+      
+      <ion-button expand="block" color="light" class="action-button" (click)="goToDocsPatient()">
+        <div class="button-content">
+          <ion-icon name="folder-outline" class="button-icon"></ion-icon>
+          <span>Documents Patients</span>
+        </div>
+      </ion-button>
+    </ng-container>
+    
+    <ion-button expand="block" color="light" class="action-button" (click)="goToMessaging()">
+      <div class="button-content">
+        <ion-icon name="chatbubble-outline" class="button-icon"></ion-icon>
+        <span>Messages</span>
+      </div>
+    </ion-button>
+  </div>
+
+  <!-- Informations personnelles -->
+  <ion-card class="info-card">
+    <ion-card-header class="card-header">
+      <ion-card-title class="card-title">
+        <ion-icon name="person-circle-outline" class="title-icon"></ion-icon>
+        Informations Personnelles
+      </ion-card-title>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <ion-list lines="none" class="info-list">
+        <ion-item class="info-item">
+          <ion-icon slot="start" name="mail-outline" class="item-icon"></ion-icon>
+          <ion-label class="item-label">
+            <h3>Email</h3>
+            <p>{{ user.email }}</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item class="info-item">
+          <ion-icon slot="start" name="id-card-outline" class="item-icon"></ion-icon>
+          <ion-label class="item-label">
+            <h3>Identifiant</h3>
+            <p>{{ user.user_id }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+    
+    <ion-button expand="block" fill="clear" color="medium" class="edit-button" (click)="editProfile()">
+      <ion-icon slot="start" name="create-outline"></ion-icon>
+      Modifier le profil
+    </ion-button>
+  </ion-card>
+
+  <!-- Historique médical (patients uniquement) -->
+  <ng-container *ngIf="user?.role === 'patient'">
+    <ion-card class="history-card">
+      <ion-card-header class="card-header">
+        <ion-card-title class="card-title">
+          <ion-icon name="medical-outline" class="title-icon"></ion-icon>
+          Historique Médical
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div *ngIf="consultations.length === 0" class="empty-state">
+          <ion-icon name="file-tray-outline" class="empty-icon"></ion-icon>
+          <p>Aucune consultation enregistrée</p>
+        </div>
+        
+        <ion-list *ngIf="consultations.length > 0" class="consultation-list">
+          <ion-item *ngFor="let consultation of consultations" class="consultation-item">
+            <div class="consultation-content">
+              <div class="consultation-header">
+                <ion-badge color="light" class="consultation-date">{{ consultation.date }}</ion-badge>
+                <ion-text color="primary" class="doctor-name">Dr. {{ consultation.doctorName }}</ion-text>
+              </div>
+              
+              <div class="consultation-details">
+                <div class="detail-row">
+                  <ion-icon name="pricetag-outline" class="detail-icon"></ion-icon>
+                  <span class="detail-label">{{ consultation.consultationType }}</span>
+                </div>
+                
+                <div class="detail-row" *ngIf="consultation.diagnostic">
+                  <ion-icon name="alert-circle-outline" class="detail-icon"></ion-icon>
+                  <span class="detail-label">{{ consultation.diagnostic }}</span>
+                </div>
+                
+                <div class="detail-row" *ngIf="consultation.prescription">
+                  <ion-icon name="medkit-outline" class="detail-icon"></ion-icon>
+                  <span class="detail-label">{{ consultation.prescription }}</span>
+                </div>
+              </div>
+              
+              <div *ngIf="consultation.documentIds.length > 0" class="documents-section">
+                <ion-button fill="clear" color="primary" size="small" (click)="downloadDocuments(consultation.documentIds)">
+                  <ion-icon slot="start" name="download-outline"></ion-icon>
+                  Télécharger ({{ consultation.documentIds.length }})
+                </ion-button>
+              </div>
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- Bouton de déconnexion -->
+  <div class="logout-section">
+    <ion-button expand="block"  class="logout-button" (click)="logout()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Déconnexion
+    </ion-button>
+  </div>
+</ion-content>

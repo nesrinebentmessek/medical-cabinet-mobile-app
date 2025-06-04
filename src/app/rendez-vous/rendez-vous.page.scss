@@ -1,0 +1,244 @@
+.doctor-profile {
+  text-align: center;
+  margin-bottom: 20px;
+
+  .doctor-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    border: 3px solid var(--ion-color-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .doctor-name {
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    margin-bottom: 5px;
+  }
+
+  .specialty-chip {
+    margin-top: 5px;
+    font-size: 0.9em;
+  }
+}
+
+ion-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+  overflow: visible; // Important - allows content to be visible
+
+  .card-title {
+    font-size: 1.2em;
+    color: var(--ion-color-primary);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+
+    ion-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.form-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 20px;
+
+  ion-icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+  }
+}
+
+.confirm-button {
+  --border-radius: 50px;
+  --box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
+  margin: 10px 0 30px;
+  height: 50px;
+  font-weight: 600;
+  text-transform: none;
+
+  ion-icon {
+    font-size: 1.2em;
+  }
+}
+
+// Calendar specific styles
+.calendar-legend {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+
+    .legend-color {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 5px;
+
+      &.available {
+        background-color: var(--ion-color-success);
+      }
+
+      &.partial {
+        background-color: var(--ion-color-warning);
+      }
+
+      &.unavailable {
+        background-color: var(--ion-color-medium);
+      }
+    }
+  }
+}
+
+.calendar-grid {
+  .calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+
+    .weekday {
+      padding: 5px;
+      font-size: 0.9em;
+    }
+  }
+
+  .calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.empty {
+        visibility: hidden;
+      }
+
+      &.available {
+        background-color: rgba(var(--ion-color-success-rgb), 0.2);
+        color: var(--ion-color-success-shade);
+
+        &:hover {
+          background-color: rgba(var(--ion-color-success-rgb), 0.4);
+        }
+      }
+
+      &.partial {
+        background-color: rgba(var(--ion-color-warning-rgb), 0.2);
+        color: var(--ion-color-warning-shade);
+
+        &:hover {
+          background-color: rgba(var(--ion-color-warning-rgb), 0.4);
+        }
+      }
+
+      &.unavailable {
+        background-color: rgba(var(--ion-color-medium-rgb), 0.2);
+        color: var(--ion-color-medium-shade);
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+      &.selected {
+        background-color: var(--ion-color-primary);
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+// Time slots specific styles
+.time-slots-container {
+  padding: 10px 0;
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  .time-slots-section {
+    margin-bottom: 15px;
+  }
+
+  .time-section-title {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: var(--ion-color-dark);
+    font-size: 1em;
+    font-weight: 500;
+  }
+
+  .time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+
+    ion-button {
+      --padding-start: 8px;
+      --padding-end: 8px;
+      height: 36px;
+      font-size: 0.9em;
+
+      &[disabled] {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .no-slots-message {
+    text-align: center;
+    padding: 20px;
+    color: var(--ion-color-medium);
+    font-style: italic;
+
+    ion-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+// Summary card styles
+.summary-card {
+  ion-item {
+    --padding-start: 0;
+    margin-bottom: 10px;
+
+    p {
+      color: var(--ion-color-medium);
+      font-size: 0.8em;
+      margin-bottom: 4px;
+    }
+
+    h2 {
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+  }
+}
+
+// Fix for scrolling content
+ion-content {
+  --padding-bottom: 100px; // Add padding at the bottom to ensure everything is visible
+}

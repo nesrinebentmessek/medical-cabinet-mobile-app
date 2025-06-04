@@ -1,0 +1,209 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Prendre rendez-vous</ion-title>
+    <ion-icon
+      name="calendar"
+      slot="end"
+      size="large"
+      color="light"
+      class="ion-padding-end"
+    ></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="doctor" class="ion-padding" [fullscreen]="true">
+  <div class="doctor-profile">
+    <ion-avatar class="doctor-avatar">
+      <img
+        [src]="doctor.image || 'assets/1.jpg'"
+        alt="Photo du Dr. {{doctor.nom}}"
+      />
+    </ion-avatar>
+    <h1 class="doctor-name">{{ doctor.nom }}</h1>
+    <ion-chip color="secondary" class="specialty-chip">
+      <ion-icon name="medkit" color="primary"></ion-icon>
+      <ion-label>{{ doctor.specialite }}</ion-label>
+    </ion-chip>
+  </div>
+
+  <!-- Calendar Section -->
+  <ion-card class="calendar-card">
+    <ion-card-header>
+      <ion-card-title class="card-title">
+        <ion-icon name="calendar-outline" color="primary"></ion-icon>
+        Calendrier de disponibilité
+      </ion-card-title>
+      <ion-card-subtitle>
+        <ion-button fill="clear" (click)="previousMonth()">
+          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+        </ion-button>
+        {{ currentMonthName }} {{ currentYear }}
+        <ion-button fill="clear" (click)="nextMonth()">
+          <ion-icon slot="icon-only" name="chevron-forward"></ion-icon>
+        </ion-button>
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Calendar legend -->
+      <div class="calendar-legend">
+        <span class="legend-item">
+          <span class="legend-color available"></span> Disponible
+        </span>
+        <span class="legend-item">
+          <span class="legend-color partial"></span> Partiellement disponible
+        </span>
+        <span class="legend-item">
+          <span class="legend-color unavailable"></span> Indisponible
+        </span>
+      </div>
+
+      <!-- Calendar grid -->
+      <div class="calendar-grid">
+        <div class="calendar-weekdays">
+          <div class="weekday">L</div>
+          <div class="weekday">M</div>
+          <div class="weekday">M</div>
+          <div class="weekday">J</div>
+          <div class="weekday">V</div>
+          <div class="weekday">S</div>
+          <div class="weekday">D</div>
+        </div>
+        <div class="calendar-days">
+          <!-- Empty slots for days before the first day of month -->
+          <div *ngFor="let day of emptyDays" class="calendar-day empty"></div>
+
+          <!-- Calendar days -->
+          <div
+            *ngFor="let day of calendarDays"
+            class="calendar-day"
+            [ngClass]="{
+                 'available': day.status === 'available',
+                 'partial': day.status === 'partial',
+                 'unavailable': day.status === 'unavailable',
+                 'selected': isSelectedDay(day.date)
+               }"
+            (click)="selectDate(day)"
+          >
+            {{ day.day }}
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Time Slots Section (only visible when a date is selected) -->
+  <ion-card *ngIf="selectedDate" class="time-slots-card">
+    <ion-card-header>
+      <ion-card-title class="card-title">
+        <ion-icon name="time-outline" color="primary"></ion-icon>
+        Créneaux horaires pour le {{ formatDate(selectedDate) }}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="time-slots-container">
+        <ng-container *ngIf="isLoading">
+          <div class="loading-container">
+            <ion-spinner name="dots"></ion-spinner>
+            <p class="ion-text-center">Chargement des horaires...</p>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="!isLoading">
+          <div *ngIf="morningSlots.length > 0" class="time-slots-section">
+            <h4 class="time-section-title">Matin</h4>
+            <div class="time-slots-grid">
+              <ion-button
+                *ngFor="let slot of morningSlots"
+                [disabled]="!slot.available"
+                [color]="isSelectedTimeSlot(slot) ? 'primary' : 'light'"
+                (click)="selectTimeSlot(slot)"
+              >
+                {{ slot.start }}
+              </ion-button>
+            </div>
+          </div>
+
+          <div *ngIf="afternoonSlots.length > 0" class="time-slots-section">
+            <h4 class="time-section-title">Après-midi</h4>
+            <div class="time-slots-grid">
+              <ion-button
+                *ngFor="let slot of afternoonSlots"
+                [disabled]="!slot.available"
+                [color]="isSelectedTimeSlot(slot) ? 'primary' : 'light'"
+                (click)="selectTimeSlot(slot)"
+              >
+                {{ slot.start }}
+              </ion-button>
+            </div>
+          </div>
+        </ng-container>
+
+        <div
+          *ngIf="!isLoading && morningSlots.length === 0 && afternoonSlots.length === 0"
+          class="no-slots-message"
+        >
+          <ion-icon name="alert-circle-outline" color="medium"></ion-icon>
+          <p>Aucun créneau disponible à cette date</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Appointment Summary (only visible when a time slot is selected) -->
+  <ion-card *ngIf="selectedDate && selectedTimeSlot" class="summary-card">
+    <ion-card-header>
+      <ion-card-title class="card-title">
+        <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
+        Récapitulatif
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-icon slot="start" name="person" color="medium"></ion-icon>
+        <ion-label>
+          <p>Patient</p>
+          <h2>{{ nomPatient }}</h2>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="medical" color="medium"></ion-icon>
+        <ion-label>
+          <p>Médecin</p>
+          <h2>Dr. {{ doctor.nom }}</h2>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="calendar" color="medium"></ion-icon>
+        <ion-label>
+          <p>Date</p>
+          <h2>{{ formatDate(selectedDate) }}</h2>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="time" color="medium"></ion-icon>
+        <ion-label>
+          <p>Heure</p>
+          <h2>{{ selectedTimeSlot.start }} - {{ selectedTimeSlot.end }}</h2>
+        </ion-label>
+      </ion-item>
+
+      <ion-button
+        expand="full"
+        (click)="prendreRendezVous()"
+        class="confirm-button"
+      >
+        <ion-icon name="checkmark" slot="start"></ion-icon>
+        Confirmer le rendez-vous
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

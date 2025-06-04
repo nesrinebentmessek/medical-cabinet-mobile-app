@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/user-profile" text="Retour"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mes Documents</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Envoyer un Document</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Rendez-vous</ion-label>
+        <ion-select [(ngModel)]="selectedAppointmentId" placeholder="Sélectionnez un rendez-vous confirmé">
+          <ion-select-option *ngFor="let rdv of confirmedAppointments" [value]="rdv._id">
+            {{ formatAppointment(rdv) }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Titre du document</ion-label>
+        <ion-input [(ngModel)]="documentTitle" placeholder="Ex: Radio pulmonaire"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Sélectionner un fichier</ion-label>
+        <input type="file" accept=".pdf,.jpg,.jpeg,.png" (change)="onFileSelected($event)" />
+      </ion-item>
+      <ion-button 
+        expand="block" 
+        color="primary" 
+        [disabled]="!documentTitle || !selectedFile || !selectedAppointmentId" 
+        (click)="uploadDocument()"
+      >
+        Envoyer
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+
+  <ion-list *ngIf="!isLoading && documents.length > 0">
+    <ion-item *ngFor="let doc of documents">
+      <ion-label>
+        <h2>{{ doc.title }}</h2>
+        <p>{{ formatDate(doc.date) }}</p>
+      </ion-label>
+      <ion-badge slot="end" [color]="doc.consulted ? 'success' : 'warning'">
+        {{ doc.consulted ? 'Consulté' : 'En attente' }}
+      </ion-badge>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="!isLoading && documents.length === 0" class="no-documents ion-text-center">
+    <ion-icon name="document-outline" size="large"></ion-icon>
+    <p>Aucun document envoyé</p>
+  </div>
+</ion-content>

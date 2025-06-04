@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="userRole === 'medecin' ? '/doctor-profile' : '/home'"  text="Retour"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Messages</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refreshConversations()">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let conversation of conversations" (click)="openChat(conversation)">
+      <ion-label>
+        <h2>{{ conversation.otherPartyName }}</h2>
+        <p *ngIf="conversation.lastMessageAt">Dernier message: {{ conversation.lastMessageAt }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="isAuthenticated && userRole === 'patient'">
+    <h3>Sélectionner un médecin</h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let doctor of doctors">
+          <ion-card class="doctor-card">
+            <img [src]="doctor.image || 'assets/placeholder-doctor.jpg'" alt="{{ doctor.nom }}" class="doctor-image" (click)="startNewConversation(doctor.id)" />
+            <ion-card-header>
+              <ion-card-title (click)="startNewConversation(doctor.id)" style="cursor: pointer;">{{ doctor.nom }}</ion-card-title>
+              <ion-card-subtitle>{{ doctor.specialite || 'Spécialité non spécifiée' }}</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

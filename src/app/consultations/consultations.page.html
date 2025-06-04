@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/doctor-profile" text="Retour"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Consultations</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Consultations</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ajouter une consultation</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="ajouter()">
+        <ion-item>
+          <ion-label>Sélectionner un rendez-vous</ion-label>
+          <ion-select [(ngModel)]="newConsultation.appointmentId" name="appointmentId" (ionChange)="onAppointmentChange($event)" required>
+            <ion-select-option *ngFor="let appt of appointments" [value]="appt._id">
+              {{ appt.patientName }} - {{ appt.date }} {{ appt.heure }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">ID Patient</ion-label>
+          <ion-input [(ngModel)]="newConsultation.patientId" name="patientId" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Nom du patient</ion-label>
+          <ion-input [(ngModel)]="newConsultation.patientName" name="patientName" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Date (YYYY-MM-DD)</ion-label>
+          <ion-input [(ngModel)]="newConsultation.date" name="date" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Diagnostic</ion-label>
+          <ion-textarea [(ngModel)]="newConsultation.diagnostic" name="diagnostic" required></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Prescription</ion-label>
+          <ion-textarea [(ngModel)]="newConsultation.prescription" name="prescription" required></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>Type de consultation</ion-label>
+          <ion-select [(ngModel)]="newConsultation.consultationType" name="consultationType">
+            <ion-select-option value="in_person">Présentielle</ion-select-option>
+            <ion-select-option value="teleconsultation">Téléconsultation</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Documents</ion-label>
+          <input type="file" multiple (change)="onFileChange($event)" accept=".pdf,.jpg,.png" />
+        </ion-item>
+        <ion-button type="submit" expand="block" color="primary">Enregistrer</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Consultations enregistrées</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let consultation of consultations">
+      <ion-label>
+        <h2>{{ consultation.patientName }}</h2>
+        <p>Date: {{ consultation.date }}</p>
+        <p>Type: {{ consultation.consultationType === 'in_person' ? 'Présentielle' : 'Téléconsultation' }}</p>
+        <p>Diagnostic: {{ consultation.diagnostic }}</p>
+        <p>Prescription: {{ consultation.prescription }}</p>
+        <p *ngIf="consultation.documentIds.length > 0">
+          Documents: {{ consultation.documentIds.length }} fichier(s)
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

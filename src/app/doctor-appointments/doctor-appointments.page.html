@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/doctor-profile" color="light" text="Retour"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mes Rendez-vous</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Liste des Rendez-vous</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let rdv of appointments" lines="full">
+          <ion-label>
+            <h2>{{ rdv.patientName }}</h2>
+            <p>Date: {{ rdv.date | date:'dd MMMM yyyy' }}</p>
+            <p>Heure: {{ rdv.heure }}</p>
+            <p>Statut: {{ rdv.status }}</p>
+          </ion-label>
+          <ion-button slot="end" fill="clear" (click)="confirmAppointment(rdv._id)" *ngIf="rdv.status === 'pending'">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" fill="clear" color="danger" (click)="cancelAppointment(rdv._id)">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <div *ngIf="appointments.length === 0" class="no-appointments">
+        <ion-icon name="alert-circle-outline" color="medium"></ion-icon>
+        <p>Aucun rendez-vous trouvé.</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

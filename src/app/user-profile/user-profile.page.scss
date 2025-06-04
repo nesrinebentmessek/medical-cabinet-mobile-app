@@ -1,0 +1,599 @@
+// profile.page.scss - Design Cabinet Médical
+:host {
+  // Palette de couleurs médicales
+  --ion-color-primary: #2563eb; // Bleu médical
+  --ion-color-primary-shade: #1e50c7;
+  --ion-color-secondary: #0ea5e9; // Bleu clair
+  --ion-color-tertiary: #0891b2; // Cyan
+  --ion-color-success: #059669; // Vert médical
+  --ion-color-danger: #dc2626; // Rouge médical
+  --ion-color-warning: #fbbf24; // Jaune
+  --ion-color-light: #f8fafc;
+  --ion-color-medium: #64748b;
+  --ion-color-dark: #1e293b;
+  
+  // Variables de style
+  --page-padding: 20px;
+  --card-border-radius: 12px;
+  --card-box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --card-background: white;
+  --heading-font: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+// Bouton retour flottant
+.floating-back-container {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 100;
+  
+  .floating-back-button {
+    --background: white;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    
+    .back-icon {
+      color: var(--ion-color-primary);
+      font-size: 18px;
+    }
+  }
+}
+
+.profile-content {
+  --background: #f1f5f9;
+  --padding-top: 0;
+  --padding-bottom: 40px;
+  font-family: var(--heading-font);
+
+  // Section Profil
+  .profile-section {
+    background: linear-gradient(to right, var(--ion-color-primary), var(--ion-color-secondary));
+    padding: 70px var(--page-padding) 30px;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50H100V100H50V50ZM0 0H50V50H0V0Z' fill='%23FFFFFF' fill-opacity='0.05'/%3E%3C/svg%3E");
+      background-size: 30px;
+      opacity: 0.3;
+    }
+    
+    .profile-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      
+      .profile-avatar {
+        width: 90px;
+        height: 90px;
+        border: 4px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        --border-radius: 50%;
+        overflow: hidden;
+        
+        img {
+          object-fit: cover;
+        }
+      }
+      
+      .profile-info {
+        margin-left: 22px;
+        
+        .user-name {
+          color: white;
+          font-size: 24px;
+          font-weight: 600;
+          margin: 0 0 8px;
+          font-family: var(--heading-font);
+        }
+        
+        .role-chip {
+          --background: rgba(255, 255, 255, 0.2);
+          --color: white;
+          font-weight: 500;
+          text-transform: capitalize;
+          font-size: 13px;
+          
+          ion-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  // Grille d'actions
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 var(--page-padding);
+    margin-top: -20px;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 5;
+    
+    .action-button {
+      --background: var(--card-background);
+      --color: var(--ion-color-dark);
+      --border-radius: 12px;
+      height: 86px;
+      margin: 0;
+      box-shadow: var(--card-box-shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      
+      &:active {
+        transform: translateY(2px);
+        --box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      }
+      
+      .button-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 8px;
+        
+        .button-icon {
+          font-size: 24px;
+          color: var(--ion-color-primary);
+          margin-bottom: 8px;
+        }
+        
+        span {
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--ion-color-dark);
+        }
+      }
+    }
+  }
+
+  // Cartes d'informations
+  .info-card, .history-card {
+    margin: 0 var(--page-padding) 20px;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-box-shadow);
+    background: var(--card-background);
+    overflow: hidden;
+    
+    .card-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      background-color: rgba(241, 245, 249, 0.5);
+      
+      .card-title {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--ion-color-dark);
+        font-family: var(--heading-font);
+        
+        .title-icon {
+          font-size: 20px;
+          margin-right: 10px;
+          color: var(--ion-color-primary);
+        }
+      }
+    }
+    
+    .info-list {
+      padding: 4px 0;
+      
+      .info-item {
+        --padding-start: 20px;
+        --padding-end: 20px;
+        --inner-padding-end: 0;
+        --min-height: 60px;
+        
+        .item-icon {
+          color: var(--ion-color-primary);
+          font-size: 18px;
+          margin-right: 14px;
+        }
+        
+        .item-label {
+          h3 {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ion-color-medium);
+            margin-bottom: 4px;
+          }
+          
+          p {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ion-color-dark);
+            margin: 0;
+          }
+        }
+      }
+    }
+    
+    .edit-button {
+      margin: 4px 20px 16px;
+      --color: var(--ion-color-primary);
+      font-weight: 500;
+      font-size: 14px;
+      height: 36px;
+      --padding-top: 0;
+      --padding-bottom: 0;
+    }
+  }
+
+  // Historique médical
+  .history-card {
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 35px 20px;
+      
+      .empty-icon {
+        font-size: 40px;
+        color: var(--ion-color-medium);
+        opacity: 0.4;
+        margin-bottom: 15px;
+      }
+      
+      p {
+        color: var(--ion-color-medium);
+        font-size: 15px;
+        text-align: center;
+      }
+    }
+    
+    .consultation-list {
+      background: transparent;
+      
+      .consultation-item {
+        --padding-start: 20px;
+        --padding-end: 20px;
+        --inner-padding-end: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        .consultation-content {
+          width: 100%;
+          padding: 14px 0;
+          
+          .consultation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            
+            .consultation-date {
+              font-size: 12px;
+              font-weight: 500;
+              --background: #e0f2fe;
+              --color: #0284c7;
+              padding: 5px 10px;
+              border-radius: 6px;
+            }
+            
+            .doctor-name {
+              font-weight: 600;
+              font-size: 14px;
+              color: var(--ion-color-primary);
+            }
+          }
+          
+          .consultation-details {
+            margin-bottom: 10px;
+            
+            .detail-row {
+              display: flex;
+              align-items: center;
+              margin-bottom: 8px;
+              
+              .detail-icon {
+                font-size: 16px;
+                margin-right: 8px;
+                color: var(--ion-color-medium);
+              }
+              
+              .detail-label {
+                font-size: 14px;
+                color: var(--ion-color-dark);
+              }
+            }
+          }
+          
+          .documents-section {
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding-top: 10px;
+            
+            ion-button {
+              --color: var(--ion-color-primary);
+              font-size: 13px;
+              font-weight: 500;
+              height: 32px;
+              --padding-top: 0;
+              --padding-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Badge statut médical (seulement pour les patients)
+  .status-section {
+    margin: 0 var(--page-padding) 20px;
+    
+    .status-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      
+      .status-badge {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        background: white;
+        box-shadow: var(--card-box-shadow);
+        
+        ion-icon {
+          margin-right: 6px;
+          font-size: 16px;
+        }
+        
+        &.appointment {
+          background-color: #e0f2fe;
+          color: #0284c7;
+          
+          ion-icon {
+            color: #0284c7;
+          }
+        }
+        
+        &.prescription {
+          background-color: #dcfce7;
+          color: #059669;
+          
+          ion-icon {
+            color: #059669;
+          }
+        }
+        
+        &.lab {
+          background-color: #fef3c7;
+          color: #b45309;
+          
+          ion-icon {
+            color: #b45309;
+          }
+        }
+      }
+    }
+  }
+
+  // Bouton de déconnexion
+  .logout-section {
+    padding: 10px var(--page-padding);
+    margin-top: 25px;
+    
+    .logout-button {
+      --border-radius: 10px;
+      --background: white;
+      --color: var(--ion-color-primary);
+      font-weight: 500;
+      height: 48px;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+      
+      ion-icon {
+        font-size: 18px;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+// Petites animations médicales
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-avatar {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.profile-section {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.action-button {
+  animation: fadeIn 0.5s ease-out;
+  animation-fill-mode: both;
+  
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+  &:nth-child(4) { animation-delay: 0.4s; }
+}
+
+.info-card {
+  animation: fadeIn 0.5s ease-out;
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.history-card {
+  animation: fadeIn 0.5s ease-out;
+  animation-delay: 0.4s;
+  animation-fill-mode: both;
+}
+
+// Media queries pour la responsivité
+@media (max-width: 576px) {
+  .profile-section {
+    .profile-header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      
+      .profile-avatar {
+        margin-bottom: 16px;
+      }
+      
+      .profile-info {
+        margin-left: 0;
+      }
+    }
+  }
+  
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .status-section {
+    .status-badges {
+      flex-direction: column;
+      
+      .status-badge {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .action-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// Spécifications pour iOS
+.ios {
+  .floating-back-container {
+    top: 50px;
+  }
+  
+  .profile-section {
+    padding-top: 90px;
+  }
+}
+
+// Style médical supplémentaire
+.profile-content {
+  // Icônes médicales personnalisées pour les boutons d'action
+  .action-button {
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--ion-color-primary), var(--ion-color-secondary));
+      opacity: 0.7;
+    }
+    
+    &:nth-child(1) .button-icon {
+      color: var(--ion-color-primary);
+    }
+    
+    &:nth-child(2) .button-icon {
+      color: var(--ion-color-secondary);
+    }
+    
+    &:nth-child(3) .button-icon {
+      color: var(--ion-color-tertiary);
+    }
+    
+    &:nth-child(4) .button-icon {
+      color: var(--ion-color-success);
+    }
+  }
+  
+  // Style spécifique pour les cartes médicales
+  .info-card, .history-card {
+    border-top: 4px solid var(--ion-color-primary);
+    
+    .card-header {
+      position: relative;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background-color: var(--ion-color-primary);
+        opacity: 0.7;
+      }
+    }
+  }
+  
+  // Style pour l'historique médical
+  .history-card {
+    border-top-color: var(--ion-color-secondary);
+    
+    .card-header {
+      &::before {
+        background-color: var(--ion-color-secondary);
+      }
+      
+      .title-icon {
+        color: var(--ion-color-secondary);
+      }
+    }
+    
+    .consultation-item {
+      position: relative;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 20px;
+        bottom: 20px;
+        width: 3px;
+        background-color: var(--ion-color-secondary);
+        opacity: 0.3;
+        border-radius: 3px;
+      }
+    }
+  }
+}

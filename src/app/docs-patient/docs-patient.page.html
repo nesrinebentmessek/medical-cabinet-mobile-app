@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/doctor-profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Documents des Patients</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-spinner *ngIf="isLoading" name="crescent" color="primary"></ion-spinner>
+
+  <ion-list *ngIf="!isLoading && documents.length > 0">
+    <ion-item *ngFor="let doc of documents">
+      <ion-label>
+        <h2>{{ doc.title }}</h2>
+        <p>Patient: {{ doc.patientName }}</p>
+        <p>Date d'envoi: {{ formatDate(doc.date) }}</p>
+        <div *ngIf="doc.annotations?.length > 0">
+          <p><strong>Annotations:</strong></p>
+          <ion-list>
+            <ion-item *ngFor="let annotation of doc.annotations">
+              <ion-label>
+                <p>{{ annotation.text }} (par {{ annotation.doctorName }}, {{ formatDate(annotation.date) }})</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+        <ion-label position="stacked">Ajouter une annotation</ion-label>
+        <ion-input [(ngModel)]="annotationInput[doc.id]" placeholder="Entrez votre annotation"></ion-input>
+        <ion-button slot="end" color="primary" (click)="annotateDocument(doc)">Annoter</ion-button>
+      </ion-label>
+      <ion-badge slot="end" [color]="doc.consulted ? 'success' : 'warning'">
+        {{ doc.consulted ? 'Consulté' : 'En attente' }}
+      </ion-badge>
+      <ion-button slot="end" fill="clear" (click)="toggleConsultedStatus(doc, !doc.consulted)">
+        <ion-icon [name]="doc.consulted ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" fill="clear" (click)="downloadDocument(doc.fileId)">
+        <ion-icon name="download-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="!isLoading && documents.length === 0" class="no-documents ion-text-center">
+    <ion-icon name="document-outline" size="large"></ion-icon>
+    <p>Aucun document disponible</p>
+  </div>
+</ion-content>

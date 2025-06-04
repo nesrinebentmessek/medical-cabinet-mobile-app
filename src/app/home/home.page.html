@@ -1,0 +1,58 @@
+<ion-content id="main-content" class="ion-padding">
+  <div *ngIf="!isLoaded" class="loading-indicator">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Chargement des médecins...</p>
+  </div>
+
+  <div class="publicite-container" *ngIf="isLoaded" (ionScroll)="onScroll($event)">
+    <div class="publicite-slider">
+      <div class="publicite-wrapper">
+        <img src="assets/pub1.avif" alt="Publicité 1" class="publicite-img">
+        <img src="assets/pub2.jpg" alt="Publicité 2" class="publicite-img">
+        <img src="assets/pub3.webp" alt="Publicité 3" class="publicite-img">
+      </div>
+    </div>
+    <p class="publicite-text">Découvrez nos offres spéciales pour les nouveaux patients !</p>
+  </div>
+
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionInput)="filterDoctors()"
+    placeholder="Rechercher un médecin"
+    debounce="500">
+  </ion-searchbar>
+
+  <ion-list *ngIf="isLoaded">
+    <ion-item *ngFor="let doctor of filteredDoctors" detail (click)="openRendezVous(doctor)">
+      <ion-avatar slot="start">
+        <img [src]="doctor.image || 'assets/1.jpg'" alt="{{ doctor.nom }}"
+             class="doctor-img"
+             onerror="this.src='assets/default-doctor.png'">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ doctor.nom }}</h2>
+        <h3>{{ doctor.specialite || 'Spécialité non spécifiée' }}</h3>
+        <p>{{ doctor.description || 'Aucune description disponible' }}</p>
+        <p *ngIf="doctor.rating">
+          <ion-icon name="star" color="warning"></ion-icon>
+          {{ doctor.rating.toFixed(1) }}
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="isLoading" class="loading-arrow">
+    <ion-icon name="arrow-down-circle"></ion-icon>
+  </div>
+
+  <div *ngIf="!hasMoreData && doctors.length > 0" class="no-more-data">
+    <ion-text color="medium">Tous les médecins sont affichés</ion-text>
+  </div>
+
+  <div *ngIf="filteredDoctors.length === 0 && !isLoading" class="no-results">
+    <ion-text color="medium">Aucun médecin trouvé</ion-text>
+    <ion-button fill="clear" (click)="searchTerm = ''; filterDoctors()">
+      Réinitialiser la recherche
+    </ion-button>
+  </div>
+</ion-content>

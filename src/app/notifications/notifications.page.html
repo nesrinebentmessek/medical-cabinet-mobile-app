@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/doctor-profile" color="light" text="Retour"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="refreshNotifications($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ng-container *ngIf="isLoading">
+    <div class="loading-container">
+      <ion-spinner name="dots"></ion-spinner>
+      <p class="ion-text-center">Chargement des notifications...</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoading">
+    <ion-list *ngIf="notifications.length > 0">
+      <ion-item *ngFor="let notif of notifications" [class.read]="notif.read">
+        <ion-label>
+          <h2>{{ notif.titre }}</h2>
+          <p>{{ notif.message }}</p>
+          <p class="date">{{ formatDate(notif.date) }}</p>
+        </ion-label>
+        <ion-toggle
+          slot="end"
+          [checked]="notif.read"
+          (ionChange)="toggleReadStatus(notif, $event.detail.checked)"
+          color="primary"
+        ></ion-toggle>
+      </ion-item>
+    </ion-list>
+
+    <div *ngIf="notifications.length === 0" class="no-notifications">
+      <ion-icon name="notifications-off-outline" color="medium"></ion-icon>
+      <p>Aucune notification disponible</p>
+    </div>
+  </ng-container>
+</ion-content>

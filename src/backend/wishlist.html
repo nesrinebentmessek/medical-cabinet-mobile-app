@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rencontrez des guides locaux passionnés avec Bienvenue en Tunisie et découvrez la Tunisie à travers leurs histoires et expertises.">
+    <meta name="keywords" content="Tunisie, guides locaux, tourisme, culture, histoire, cuisine">
+    <title>Locaux - Bienvenue en Tunisie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #1A3C6D;       /* Bleu foncé */
+            --primary-light: #2B5A9A; /* Bleu clair */
+            --accent: #F5A623;        /* Jaune doré/ambre */
+            --accent-dark: #D68A1A;   /* Ambre foncé */
+            --white: #FFFFFF;         /* Blanc */
+            --off-white: #F8F1E9;     /* Blanc cassé */
+            --text-dark: #1A3C6D;     /* Bleu foncé pour texte */
+            --text-medium: #555555;   /* Gris moyen */
+            --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.15);
+            --radius-sm: 10px;
+            --radius-md: 15px;
+            --radius-lg: 20px;
+            --transition: all 0.3s ease;
+            --font-body: 'Poppins', sans-serif;
+            --container-width: 1300px;
+            --header-height: 72px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--off-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Accessibilité & Focus */
+        a:focus, button:focus, input:focus, select:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--off-white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        nav a {
+            color: var(--off-white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        nav a.active {
+            background-color: var(--primary-light);
+        }
+
+        .nav-auth {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--off-white);
+            color: var(--off-white);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--off-white);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-dark);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--off-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: url('https://via.placeholder.com/1300x400?text=Tunisian+Locals') no-repeat center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--off-white);
+            border-radius: var(--radius-lg);
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(26, 60, 109, 0.6), rgba(245, 166, 35, 0.4));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter Form */
+        .filter-form {
+            background-color: var(--off-white);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        .filter-form select {
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: 2px solid var(--text-dark);
+            border-radius: var(--radius-sm);
+            flex: 1;
+            min-width: 200px;
+            background-color: var(--white);
+            transition: var(--transition);
+        }
+
+        .filter-form select:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        .filter-form button {
+            padding: 0.8rem 2rem;
+            background-color: var(--accent);
+            color: var(--text-dark);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .filter-form button:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Local Connections */
+        .locals-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .local-card {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .local-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .local-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--accent);
+        }
+
+        .local-card h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .local-card .local-details {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .local-card p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .local-card a {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--accent);
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .local-card a:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero {
+                height: 350px;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --container-width: 100%;
+            }
+
+            header {
+                height: auto;
+                padding: 1rem 0;
+            }
+
+            .nav-links, .nav-auth {
+                display: none;
+            }
+
+            .nav-links.show, .nav-auth.show {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--primary);
+                position: absolute;
+                top: var(--header-height);
+                left: 0;
+                padding: 1rem;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .nav-links.show a, .nav-auth.show a {
+                padding: 0.75rem;
+                text-align: center;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .locals-list {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-form select {
+                min-width: 100%;
+            }
+
+            .hero {
+                height: 300px;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .logo-img {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .mobile-menu-toggle {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                height: 250px;
+                padding: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .filter-form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-img">T</div>
+                <div class="logo-text">Bienvenue en Tunisie</div>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <nav class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="index.html#search">Recherche</a>
+                <a href="index.html#itinerary">Itinéraire</a>
+                <a href="index.html#favorites">Favoris</a>
+                <a href="events.html">Événements</a>
+                <a href="locals.html" class="active">Locaux</a>
+            </nav>
+            <div class="nav-auth">
+                <a href="login.html" class="btn btn-outline">Connexion</a>
+                <a href="register.html" class="btn btn-primary">Inscription</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <h2>Connectez-vous avec les Locaux</h2>
+                <p>Rencontrez des guides passionnés et découvrez la Tunisie à travers leurs histoires et connaissances.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Form -->
+    <section class="container">
+        <form class="filter-form">
+            <select name="region">
+                <option value="">Sélectionner une région</option>
+                <option value="tunis">Tunis</option>
+                <option value="sousse">Sousse</option>
+                <option value="djerba">Djerba</option>
+            </select>
+            <select name="expertise">
+                <option value="">Sélectionner une expertise</option>
+                <option value="cultural">Guide culturel</option>
+                <option value="food">Expert culinaire</option>
+                <option value="history">Expert en histoire</option>
+            </select>
+            <button type="submit">Filtrer</button>
+        </form>
+    </section>
+
+    <!-- Local Connections -->
+    <section class="container">
+        <h2>Rencontrez les locaux</h2>
+        <div class="locals-list">
+            <div class="local-card">
+                <img src="https://via.placeholder.com/100?text=Amina" alt="Amina">
+                <h3>Amina</h3>
+                <div class="local-details">
+                    <span>Lieu: Sidi Bou Said, Tunis</span><br>
+                    <span>Expertise: Guide culturel</span>
+                </div>
+                <p>Guide passionnée partageant ses lieux favoris et l'histoire de Sidi Bou Said.</p>
+                <a href="#">En savoir plus</a>
+            </div>
+            <div class="local-card">
+                <img src="https://via.placeholder.com/100?text=Karim" alt="Karim">
+                <h3>Karim</h3>
+                <div class="local-details">
+                    <span>Lieu: Carthage, Tunis</span><br>
+                    <span>Expertise: Expert en histoire</span>
+                </div>
+                <p>Habitant de Carthage, expert des trésors cachés et de l'histoire antique.</p>
+                <a href="#">En savoir plus</a>
+            </div>
+            <div class="local-card">
+                <img src="https://via.placeholder.com/100?text=Fatima" alt="Fatima">
+                <h3>Fatima</h3>
+                <div class="local-details">
+                    <span>Lieu: Sousse</span><br>
+                    <span>Expertise: Expert culinaire</span>
+                </div>
+                <p>Chef local offrant des ateliers de cuisine tunisienne traditionnelle.</p>
+                <a href="#">En savoir plus</a>
+            </div>
+            <div class="local-card">
+                <img src="https://via.placeholder.com/100?text=Mohamed" alt="Mohamed">
+                <h3>Mohamed</h3>
+                <div class="local-details">
+                    <span>Lieu: Djerba</span><br>
+                    <span>Expertise: Guide culturel</span>
+                </div>
+                <p>Guide à Djerba, spécialisé dans les traditions et l'artisanat local.</p>
+                <a href="#">En savoir plus</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Script pour le menu mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const navAuth = document.querySelector('.nav-auth');
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    if (navLinks) navLinks.classList.toggle('show');
+                    if (navAuth) navAuth.classList.toggle('show');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

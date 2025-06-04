@@ -1,0 +1,106 @@
+:root {
+  --ion-color-primary: #3880ff;
+  --ion-color-secondary: #3dc2ff;
+  --ion-padding: 16px;
+  --tab-bar-height: 56px; /* Hauteur de la barre d'onglets */
+}
+
+.publicite-container {
+  margin-bottom: var(--ion-padding);
+  text-align: center;
+}
+
+.publicite-slider {
+  position: relative;
+  width: 100%;
+  height: 200px; /* Ajustez la hauteur selon vos besoins */
+  overflow: hidden;
+}
+
+.publicite-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.publicite-img:first-child {
+  opacity: 1; /* La première image est visible par défaut */
+}
+
+@keyframes slide {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Animation pour chaque image, avec des délais différents */
+.publicite-img:nth-child(1) {
+  animation: slide 9s infinite 0s; /* Durée de l'animation */
+}
+
+.publicite-img:nth-child(2) {
+  animation: slide 9s infinite 3s; /* Décalage de 3 secondes pour la deuxième image */
+}
+
+.publicite-img:nth-child(3) {
+  animation: slide 9s infinite 6s; /* Décalage de 6 secondes pour la troisième image */
+}
+
+.search-container {
+  margin-bottom: var(--ion-padding);
+}
+
+.doctors-container {
+  overflow-y: auto;
+  padding: var(--ion-padding);
+}
+
+.doctor-img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Style pour la barre d'onglets fixe */
+ion-tab-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: var(--tab-bar-height);
+  z-index: 1000; /* Assure que la barre est au-dessus du contenu */
+}
+
+/* Ajouter une marge en bas du contenu pour éviter le chevauchement */
+ion-content {
+  --overflow: auto;
+  margin-bottom: var(--tab-bar-height); /* Évite le chevauchement avec la barre d'onglets */
+}
+/* Style de la flèche qui tourne */
+.loading-arrow {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: spin 1s infinite linear;
+  font-size: 3rem;
+  color: #e50914;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
