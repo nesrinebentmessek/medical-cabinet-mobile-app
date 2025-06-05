@@ -2,7 +2,7 @@
 
 A mobile application that optimizes patient-doctor interactions by providing:
 
-- Automated appointment scheduling  
+- Appointment scheduling  
 - Secure exchange of medical records  
 - Consultation tracking  
 
